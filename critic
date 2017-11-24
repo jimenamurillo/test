@@ -20,13 +20,13 @@ def print_divider():
 def is_source_file(path):
     if not os.path.isfile(path):
         return False
-    
+
     st = os.stat(path)
     size = st.st_size
     if size > MAX_SOURCE_FILE_SIZE:
         return False
 
-    return True    
+    return True
 
 # return True on success or False on failure
 def command(arg_list):
@@ -45,7 +45,7 @@ def command_lines(arg_list):
     if p.returncode != 0:
         return None
     else:
-        return stdout_str.splitlines()                         
+        return stdout_str.splitlines()
 
 class Contributor:
     def __init__(self, name, emails):
@@ -78,7 +78,7 @@ def build():
 
 def test():
     return (build() and
-            command(['./Project1exe']))
+            command(['./Project4exe']))
 
 def team():
     contribs = find_contributors()
@@ -107,7 +107,7 @@ def print_usage():
 def usage_error():
     print_usage()
     sys.exit(1)
-    
+
 def main():
     if len(sys.argv) != 2:
         usage_error()
