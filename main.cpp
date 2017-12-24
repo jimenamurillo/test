@@ -15,10 +15,12 @@ using namespace std;
 
 template <typename T>
 bool testAnswer(const string &nameOfTest, const T &received, const T &expected);
-bool testString(const string &nameOfTest, const string &received, const string &expected); 
+bool testString(const string &nameOfTest, const string &received, const string &expected);
 bool testTree(const string &nameOfTest, const ArithNode *ptr, const string &expected);
 void printTree(ArithNode *ptr);
 bool passedAllTests = true;
+int nTestsPassed = 0;
+int nTests = 0;
 
 int main() {
 
@@ -27,14 +29,14 @@ int main() {
 		string infix = "10 * ( 20 + 30 )";
 		cout << "The infix expression is " << infix << endl;
 		int answer = EvaluateInfix(infix);
-		cout << "The answer is " << answer << endl;
+		//cout << "The answer is " << answer << endl;
 		testAnswer("EvaluateInfix", answer, 500);
 		string rpn = Infix2RPN(infix);
-		cout << "The equivalent RPN expression is " << rpn << endl;
+		//cout << "The equivalent RPN expression is " << rpn << endl;
 		testString("Infix2RPN", rpn, string("10 20 30 + *"));
-		cout << "The equivalent expression tree is:" << endl;
+		//cout << "The equivalent expression tree is:" << endl;
 		ArithNode *tree = Infix2ExpressionTree(infix);
-		printTree(tree);
+		//printTree(tree);
 		testTree("Infix2ExpressionTree", Infix2ExpressionTree(infix), string("*(10)(+(20)(30))"));
 		cout << endl;
 	}
@@ -43,14 +45,14 @@ int main() {
 		string infix = "200 / ( 120 + 10 * ( 20 - 30 ) )";
 		cout << "The infix expression is " << infix << endl;
 		int answer = EvaluateInfix(infix);
-		cout << "The answer is " << answer << endl;
+		//cout << "The answer is " << answer << endl;
 		testAnswer("EvaluateInfix", answer, 10);
 		string rpn = Infix2RPN(infix);
-		cout << "The equivalent RPN expression is " << rpn << endl;
+		//cout << "The equivalent RPN expression is " << rpn << endl;
 		testString("Infix2RPN", rpn, string("200 120 10 20 30 - * + /"));
-		cout << "The equivalent expression tree is:" << endl;
+		//cout << "The equivalent expression tree is:" << endl;
 		ArithNode *tree = Infix2ExpressionTree(infix);
-		printTree(tree);
+		//printTree(tree);
 		testTree("Infix2ExpressionTree", Infix2ExpressionTree(infix), string("/(200)(+(120)(*(10)(-(20)(30))))"));
 		cout << endl;
 	}
@@ -59,14 +61,14 @@ int main() {
 		string rpn = "25 10 20 30 + * +";
 		cout << "The RPN expression is " << rpn << endl;
 		int answer = EvaluateRPN(rpn);
-		cout << "The answer is " << answer << endl;
+		//cout << "The answer is " << answer << endl;
 		testAnswer("EvaluateRPN", answer, 525);
 		string infix = RPN2Infix(rpn);
-		cout << "The equivalent infix expression is " << infix << endl;
+		//cout << "The equivalent infix expression is " << infix << endl;
 		testString("RPN2Infix", infix, string("(25+(10*(20+30)))"));
-		cout << "The equivalent expression tree is:" << endl;
+		//cout << "The equivalent expression tree is:" << endl;
 		ArithNode *tree = RPN2ExpressionTree(rpn);
-		printTree(tree);
+		//printTree(tree);
 		testTree("RPN2ExpressionTree", tree, string("+(25)(*(10)(+(20)(30)))"));
 		cout << endl;
 	}
@@ -75,26 +77,119 @@ int main() {
 		string rpn = "200 120 10 20 30 - * + /";
 		cout << "The RPN expression is " << rpn << endl;
 		int answer = EvaluateRPN(rpn);
-		cout << "The answer is " << answer << endl;
+		//cout << "The answer is " << answer << endl;
 		testAnswer("EvaluateRPN", answer, 10);
 		string infix = RPN2Infix(rpn);
-		cout << "The equivalent infix expression is " << infix << endl;
+		//cout << "The equivalent infix expression is " << infix << endl;
 		testString("RPN2Infix", infix, string("(200/(120+(10*(20-30))))"));
-		cout << "The equivalent expression tree is:" << endl;
+		//cout << "The equivalent expression tree is:" << endl;
 		ArithNode *tree = RPN2ExpressionTree(rpn);
-		printTree(tree);
+		//printTree(tree);
 		testTree("RPN2ExpressionTree", tree, string("/(200)(+(120)(*(10)(-(20)(30))))"));
 		cout << endl;
-	}	
+	}
 
-	if (passedAllTests)
-		cout << "Congratulations! Passed all tests" << endl;
+// New tests
+// Convert and evaluate infix expression
+{
+	string infix = "( 50 + 20 ) * ( 10 - 5 )";
+	cout << "The infix expression is " << infix << endl;
+	int answer = EvaluateInfix(infix);
+	//cout << "The answer is " << answer << endl;
+	testAnswer("EvaluateInfix", answer, 350);
+	string rpn = Infix2RPN(infix);
+	//cout << "The equivalent RPN expression is " << rpn << endl;
+	testString("Infix2RPN", rpn, string("50 20 + 10 5 - *"));
+	//cout << "The equivalent expression tree is:" << endl;
+	ArithNode *tree = Infix2ExpressionTree(infix);
+	//printTree(tree);
+	testTree("Infix2ExpressionTree", Infix2ExpressionTree(infix), string("*(+(50)(20))(-(10)(5))"));
+	cout << endl;
+}
+
+// Convert and evaluate infix expression
+{
+	string infix = "( ( ( ( 5 + 5 ) * 2 ) + 5 ) * 4 )";
+	cout << "The infix expression is " << infix << endl;
+	int answer = EvaluateInfix(infix);
+	//cout << "The answer is " << answer << endl;
+	testAnswer("EvaluateInfix", answer, 100);
+	string rpn = Infix2RPN(infix);
+	//cout << "The equivalent RPN expression is " << rpn << endl;
+	testString("Infix2RPN", rpn, string("5 5 + 2 * 5 + 4 *"));
+	//cout << "The equivalent expression tree is:" << endl;
+	ArithNode *tree = Infix2ExpressionTree(infix);
+	//printTree(tree);
+	testTree("Infix2ExpressionTree", Infix2ExpressionTree(infix), string("*(+(*(+(5)(5))(2))(5))(4)"));
+	cout << endl;
+}
+
+// Convert and evaluate RPN expression
+{
+	string rpn = "5 5 + 2 * 5 + 4 *";
+	cout << "The RPN expression is " << rpn << endl;
+	int answer = EvaluateRPN(rpn);
+	//cout << "The answer is " << answer << endl;
+	testAnswer("EvaluateRPN", answer, 100);
+	string infix = RPN2Infix(rpn);
+	//cout << "The equivalent infix expression is " << infix << endl;
+	testString("RPN2Infix", infix, string("((((5+5)*2)+5)*4)"));
+	//cout << "The equivalent expression tree is:" << endl;
+	ArithNode *tree = RPN2ExpressionTree(rpn);
+	//printTree(tree);
+	testTree("RPN2ExpressionTree", tree, string("*(+(*(+(5)(5))(2))(5))(4)"));
+	cout << endl;
+}
+
+
+// Convert and evaluate RPN expression
+{
+	string rpn = "10 9 + 8 + 7 + 6 +";
+	cout << "The RPN expression is " << rpn << endl;
+	int answer = EvaluateRPN(rpn);
+	// cout << "The answer is " << answer << endl;
+	testAnswer("EvaluateRPN", answer, 40);
+	string infix = RPN2Infix(rpn);
+	//cout << "The equivalent infix expression is " << infix << endl;
+	testString("RPN2Infix", infix, string("((((10+9)+8)+7)+6)"));
+	//cout << "The equivalent expression tree is:" << endl;
+	ArithNode *tree = RPN2ExpressionTree(rpn);
+	//printTree(tree);
+	testTree("RPN2ExpressionTree", tree, string("+(+(+(+(10)(9))(8))(7))(6)"));
+	cout << endl;
+}
+
+
+// Convert and evaluate infix expression
+{
+	string infix = "10 + 9 + 8 + 7 + 6";
+	cout << "The infix expression is " << infix << endl;
+	int answer = EvaluateInfix(infix);
+	//cout << "The answer is " << answer << endl;
+	testAnswer("EvaluateInfix", answer, 40);
+	string rpn = Infix2RPN(infix);
+	//cout << "The equivalent RPN expression is " << rpn << endl;
+	testString("Infix2RPN", rpn, string("10 9 + 8 + 7 + 6 +"));
+	//cout << "The equivalent expression tree is:" << endl;
+	ArithNode *tree = Infix2ExpressionTree(infix);
+	//printTree(tree);
+	testTree("Infix2ExpressionTree", Infix2ExpressionTree(infix), string("+(+(+(+(10)(9))(8))(7))(6)"));
+	cout << endl;
+}
+
+
+cout << "Passed " << nTestsPassed << " of " << nTests << " tests" << endl;
+cout << "Function score = " << nTestsPassed*3 << endl;
+
+// if (passedAllTests)	cout << "Congratulations! Passed all tests" << endl;
 }
 
 template <typename T>
 bool testAnswer(const string &nameOfTest, const T &received, const T &expected) {
+  nTests++;
 	if (received == expected) {
-		cout << "PASSED " << nameOfTest << ": expected and received " << received << endl;
+		nTestsPassed++;
+		cout << "PASSED " << nameOfTest << ": expected and received " << received << " [" << nTestsPassed*3 << " points]" << endl;
 		return true;
 	}
 	passedAllTests = false;
@@ -111,8 +206,10 @@ string removeWhitespace(const string &s) {
 }
 
 bool testString(const string &nameOfTest, const string &received, const string &expected) {
+	nTests++;
 	if (removeWhitespace(received) == removeWhitespace(expected)) {
-		cout << "PASSED " << nameOfTest << ": expected and received " << received << endl;
+		cout << "PASSED " << nameOfTest << ": expected and received " << received << " [" << nTestsPassed*3 << " points]"<< endl;
+	  nTestsPassed++;
 		return true;
 	}
 	cout << "FAILED " << nameOfTest << ": expected " << expected << " but received " << received << endl;
@@ -132,8 +229,11 @@ string tree2string(const ArithNode *ptr) {
 
 bool testTree(const string &nameOfTest, const ArithNode *ptr, const string &expected) {
 	string received = tree2string(ptr);
+	// cout << "received: " << received << endl;
+	nTests++;
 	if (received == expected) {
-		cout << "PASSED " << nameOfTest << ": expected and received " << expected << endl;
+		cout << "PASSED " << nameOfTest << ": expected and received " << expected << " [" << nTestsPassed*3 << " points]"<< endl;
+		nTestsPassed++;
 		return true;
 	}
 	cout << "FAILED " << nameOfTest << ": expected " << expected << " but received " << received << endl;
