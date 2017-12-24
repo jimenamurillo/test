@@ -36,4 +36,10 @@ ArithNode *Infix2ExpressionTree(string);
 ArithNode *RPN2ExpressionTree(string);
 int EvaluateInfix(string);
 int EvaluateRPN(string);
+bool isOperator(char);
+bool isOperand(string);
+int Precedence (string op1, string op2);
+int GetPrecedence (string op);
+int evaluateRPN_helper (string, int, int);
+string ExpressionTree2Infix (ArithNode * ptr);
 
